@@ -1,0 +1,409 @@
+{
+	"info": {
+		"_postman_id": "sleep-helper-api-tests",
+		"name": "睡眠数据管理API测试",
+		"description": "睡眠数据管理系统的API接口测试集合",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "健康检查",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/sleep/health",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"sleep",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "初始化测试数据",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/sleep/data/init",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"sleep",
+						"data",
+						"init"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "新增睡眠数据",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userId\": \"user001\",\n  \"dateOfSleep\": \"2024-01-01\",\n  \"totalSleepDuration\": 480,\n  \"deepSleepDuration\": 90,\n  \"remSleepDuration\": 120,\n  \"sleepScore\": 85\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/sleep/data",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"sleep",
+						"data"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查询单条睡眠记录",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/sleep/data?userId=user001&dateOfSleep=2024-01-01",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"sleep",
+						"data"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "user001"
+						},
+						{
+							"key": "dateOfSleep",
+							"value": "2024-01-01"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查询用户所有睡眠记录",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/sleep/data/user/user001",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"sleep",
+						"data",
+						"user",
+						"user001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "睡眠积分-健康检查",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/points/health",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"points",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "生成睡眠积分",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/points/generate?userId=user001&dateOfSleep=2024-01-01",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"points",
+						"generate"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "user001"
+						},
+						{
+							"key": "dateOfSleep",
+							"value": "2024-01-01"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查询积分历史",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/points/history?userId=user001",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"points",
+						"history"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "user001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查询当前总积分",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/points/current?userId=user001",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"points",
+						"current"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "user001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查询积分记录",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/points/record?userId=user001&date=2024-01-01",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"points",
+						"record"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "user001"
+						},
+						{
+							"key": "date",
+							"value": "2024-01-01"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AI服务-健康检查",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/ai/health",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"ai",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AI服务-生成睡眠报告",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userId\": \"user001\",\n  \"dateOfSleep\": \"2024-01-01\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/ai/report",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"ai",
+						"report"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AI服务-多轮对话",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userId\": \"user001\",\n  \"message\": \"我最近总是失眠，怎么办？\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/ai/chat",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"ai",
+						"chat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AI服务-清空对话历史",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userId\": \"user001\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/ai/chat/clear",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"ai",
+						"chat",
+						"clear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AI服务-获取对话统计",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/ai/chat/stats?userId=user001",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"ai",
+						"chat",
+						"stats"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "user001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AI服务-获取帮助信息",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/ai/help",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"ai",
+						"help"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}

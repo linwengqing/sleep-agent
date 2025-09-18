@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sleephelper.mapper.SleepPointsMapper">
+
+    <!-- 结果映射 -->
+    <resultMap id="BaseResultMap" type="com.sleephelper.entity.SleepPoints">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="date" property="date" jdbcType="DATE"/>
+        <result column="points" property="points" jdbcType="INTEGER"/>
+        <result column="created_at" property="createdAt" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 基础字段 -->
+    <sql id="Base_Column_List">
+        id, user_id, date, points, created_at
+    </sql>
+
+    <!-- 插入积分记录 -->
+    <insert id="insert" parameterType="com.sleephelper.entity.SleepPoints" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sleep_points (
+            user_id, date, points, created_at
+        ) VALUES (
+            #{userId}, #{date}, #{points}, #{createdAt}
+        )
+    </insert>
+
+    <!-- 根据ID查询 -->
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM sleep_points
+        WHERE id = #{id}
+    </select>
+
+    <!-- 查询所有记录 -->
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM sleep_points
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 根据用户ID查询积分历史 -->
+    <select id="selectByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM sleep_points
+        WHERE user_id = #{userId}
+        ORDER BY date DESC
+    </select>
+
+    <!-- 根据用户ID和日期查询积分记录 -->
+    <select id="selectByUserIdAndDate" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM sleep_points
+        WHERE user_id = #{userId} AND date = #{date}
+    </select>
+
+    <!-- 计算用户总积分 -->
+    <select id="calculateTotalPoints" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT COALESCE(SUM(points), 0)
+        FROM sleep_points
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 更新记录 -->
+    <update id="updateById" parameterType="com.sleephelper.entity.SleepPoints">
+        UPDATE sleep_points
+        SET user_id = #{userId},
+            date = #{date},
+            points = #{points},
+            created_at = #{createdAt}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除记录 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM sleep_points WHERE id = #{id}
+    </delete>
+
+</mapper>

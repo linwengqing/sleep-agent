@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sleephelper.mapper.SleepAnalysisSummaryMapper">
+
+    <!-- 结果映射 -->
+    <resultMap id="BaseResultMap" type="com.sleephelper.entity.SleepAnalysisSummary">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="date_of_sleep" property="dateOfSleep" jdbcType="DATE"/>
+        <result column="total_sleep_duration" property="totalSleepDuration" jdbcType="INTEGER"/>
+        <result column="deep_sleep_duration" property="deepSleepDuration" jdbcType="INTEGER"/>
+        <result column="rem_sleep_duration" property="remSleepDuration" jdbcType="INTEGER"/>
+        <result column="sleep_score" property="sleepScore" jdbcType="INTEGER"/>
+        <result column="processed_at" property="processedAt" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 基础字段 -->
+    <sql id="Base_Column_List">
+        id, user_id, date_of_sleep, total_sleep_duration, deep_sleep_duration, 
+        rem_sleep_duration, sleep_score, processed_at
+    </sql>
+
+    <!-- 插入睡眠数据 -->
+    <insert id="insert" parameterType="com.sleephelper.entity.SleepAnalysisSummary" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sleep_analysis_summaries (
+            user_id, date_of_sleep, total_sleep_duration, deep_sleep_duration,
+            rem_sleep_duration, sleep_score, processed_at
+        ) VALUES (
+            #{userId}, #{dateOfSleep}, #{totalSleepDuration}, #{deepSleepDuration},
+            #{remSleepDuration}, #{sleepScore}, #{processedAt}
+        )
+    </insert>
+
+    <!-- 根据ID查询 -->
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM sleep_analysis_summaries
+        WHERE id = #{id}
+    </select>
+
+    <!-- 查询所有记录 -->
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM sleep_analysis_summaries
+        ORDER BY processed_at DESC
+    </select>
+
+    <!-- 根据用户ID查询 -->
+    <select id="selectByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM sleep_analysis_summaries
+        WHERE user_id = #{userId}
+        ORDER BY date_of_sleep DESC
+    </select>
+
+    <!-- 根据用户ID和日期查询 -->
+    <select id="selectByUserIdAndDate" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM sleep_analysis_summaries
+        WHERE user_id = #{userId} AND date_of_sleep = #{dateOfSleep}
+    </select>
+
+    <!-- 更新记录 -->
+    <update id="updateById" parameterType="com.sleephelper.entity.SleepAnalysisSummary">
+        UPDATE sleep_analysis_summaries
+        SET user_id = #{userId},
+            date_of_sleep = #{dateOfSleep},
+            total_sleep_duration = #{totalSleepDuration},
+            deep_sleep_duration = #{deepSleepDuration},
+            rem_sleep_duration = #{remSleepDuration},
+            sleep_score = #{sleepScore},
+            processed_at = #{processedAt}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除记录 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM sleep_analysis_summaries WHERE id = #{id}
+    </delete>
+
+</mapper>

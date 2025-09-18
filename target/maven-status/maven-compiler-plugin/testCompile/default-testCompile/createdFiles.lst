@@ -1,0 +1,4 @@
+com\sleephelper\controller\SleepAIControllerTest.class
+com\sleephelper\controller\SleepPointsControllerTest.class
+com\sleephelper\controller\SleepAnalysisSummaryControllerTest.class
+com\sleephelper\service\SleepPointsServiceTest.class

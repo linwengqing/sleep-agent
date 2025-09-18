@@ -1,0 +1,87 @@
+# 应用配置
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_param
+    include-exception: true
+
+# Spring 配置
+spring:
+  application:
+    name: sleep-helper
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  # 阿里云百炼大模型配置
+  ai:
+    bailian:
+      # 阿里云百炼API配置
+      api-key: ${BAILIAN_API_KEY:sk-4da2a02e69a4403ca29741836024515f}  # 从环境变量读取，默认值用于开发测试
+      endpoint: https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation
+      model: qwen-plus  # 使用通义千问plus模型，可切换为qwen-turbo、qwen-max等
+      # 模型参数配置
+      temperature: 0.7  # 控制生成文本的随机性，0-1之间
+      top-p: 0.9       # 核采样参数，控制生成文本的多样性
+      max-tokens: 2048  # 最大生成token数
+      timeout: 30000   # 请求超时时间（毫秒）
+
+  # CORS 配置
+  web:
+    cors:
+      allowed-origins: "*"
+      allowed-methods: "*"
+      allowed-headers: "*"
+      allow-credentials: true
+
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sleep_helper?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+
+    # HikariCP 连接池配置 (Spring Boot 3.x 默认)
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      connection-test-query: SELECT 1
+
+# MyBatis 配置
+mybatis:
+  # 配置mapper xml文件的路径
+  mapper-locations: classpath*:mapper/**/*.xml
+  # 配置MyBatis数据返回类型别名（默认别名是类名）
+  type-aliases-package: com.sleephelper.entity
+  configuration:
+    # 自动驼峰命名规则（camel case）映射
+    map-underscore-to-camel-case: true
+    # MyBatis自动驼峰命名规则映射
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 管理端点配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# 日志配置
+logging:
+  level:
+    com.sleephelper.mapper: debug
+    org.springframework.web: debug
+    org.springframework.ai: debug
+    org.springframework.boot.autoconfigure: info
+    org.mybatis: debug
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n'
