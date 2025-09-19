@@ -91,6 +91,6 @@ logging:
     org.springframework.ai: debug
     org.springframework.boot.autoconfigure: info
     org.mybatis: debug
-    com.sleephelper.service.impl.AuraLinkPointsServiceImpl: info
+    com.sleephelper.service.impl.com.sleephelper.service.impl.AuraLinkPoints2ServiceImpl: info
   pattern:
     console: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n'
