@@ -75,6 +75,14 @@ management:
     health:
       show-details: always
 
+# 区块链配置
+blockchain:
+  rpc-url: https://mainnet.infura.io/v3/YOUR_PROJECT_ID
+  contract-address: 0x...
+  private-key: YOUR_PRIVATE_KEY
+  gas-limit: "21000"
+  gas-price: "20000000000"
+
 # 日志配置
 logging:
   level:
@@ -83,5 +91,6 @@ logging:
     org.springframework.ai: debug
     org.springframework.boot.autoconfigure: info
     org.mybatis: debug
+    com.sleephelper.service.impl.AuraLinkPointsServiceImpl: info
   pattern:
     console: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n'
