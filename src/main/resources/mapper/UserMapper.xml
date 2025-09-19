@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sleephelper.mapper.UserMapper">
+
+    <!-- 结果映射 -->
+    <resultMap id="BaseResultMap" type="com.sleephelper.entity.User">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="wallet_address" property="walletAddress" jdbcType="VARCHAR"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="created_at" property="createdAt" jdbcType="TIMESTAMP"/>
+        <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 基础字段 -->
+    <sql id="Base_Column_List">
+        id, wallet_address, username, avatar, created_at, updated_at
+    </sql>
+
+    <!-- 根据用户ID查询用户信息 -->
+    <select id="selectById" parameterType="string" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM users
+        WHERE id = #{id}
+    </select>
+
+    <!-- 根据钱包地址查询用户信息 -->
+    <select id="selectByWalletAddress" parameterType="string" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM users
+        WHERE wallet_address = #{walletAddress}
+    </select>
+
+    <!-- 根据用户名查询用户信息 -->
+    <select id="selectByUsername" parameterType="string" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM users
+        WHERE username = #{username}
+    </select>
+
+    <!-- 插入用户信息 -->
+    <insert id="insert" parameterType="com.sleephelper.entity.User">
+        INSERT INTO users (id, wallet_address, username, avatar, created_at, updated_at)
+        VALUES (#{id}, #{walletAddress}, #{username}, #{avatar}, #{createdAt}, #{updatedAt})
+    </insert>
+
+    <!-- 更新用户信息 -->
+    <update id="updateById" parameterType="com.sleephelper.entity.User">
+        UPDATE users
+        <set>
+            <if test="walletAddress != null">wallet_address = #{walletAddress},</if>
+            <if test="username != null">username = #{username},</if>
+            <if test="avatar != null">avatar = #{avatar},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据用户ID删除用户 -->
+    <delete id="deleteById" parameterType="string">
+        DELETE FROM users WHERE id = #{id}
+    </delete>
+
+</mapper>
